@@ -1,303 +1,118 @@
-# B5A2
 
-# 🐆 Wildlife Conservation Monitoring Assignment
+# Bonus Section
 
----
+##  2. What is the purpose of a database schema in PostgreSQL?
+## PostgreSQL-এ ডেটাবেস স্কিমার কাজ?
 
-### **🌿 The Ranger and the Rare Animal**
+স্কিমা হলো একটি সাজানো কাঠামো বা নকশা, যা একটি ডেটাবেইসে ডেটাগুলো কীভাবে সংরক্ষিত ও সংগঠিত হবে তা নির্ধারণ করে।
+এটি ডেটার গঠন (যেমন কোন কোন টেবিল থাকবে, কোন টেবিলে কী ধরনের তথ্য থাকবে), ডেটার মধ্যে সম্পর্ক, নিয়ম (যেমন প্রাইমারি কি, ফরেন কি), এবং ডেটার ধরন ব্যাখ্যা করে — কিন্তু এটি ডেটার প্রকৃত মান বা তথ্য নয়।
 
-Meera is a forest ranger who protects wildlife in a nature reserve. She’s searching for the rare **Shadow Leopard** , which hasn’t been seen in months. To help track sightings and share data with scientists, she uses a simple database with three tables: **`rangers`**, **`species`**, and **`sightings`**. These help her log observations, learn about endangered animals, and find clues about rare animals like the Shadow Leopard might be hiding.
+PostgreSQL-এ ডেটাবেস স্কিমার কাজ:
 
----
+🔹 কাজ গুছিয়ে রাখা
+স্কিমা সাহায্য করে একই ধরনের টেবিল ও ডেটা একসাথে রাখতে। এতে ডেটাবেস বুঝতে সহজ হয়।
 
-## **📜 Assignment Objective**
+উদাহরণ: sales নামে একটা স্কিমায় বিক্রয় সম্পর্কিত টেবিল থাকবে, আর hr নামে আরেকটা স্কিমায় কর্মচারীদের তথ্য থাকবে।
 
-This assignment focuses on **PostgreSQL database operations** using a real-world scenario in **wildlife conservation monitoring**. You will create and manage three tables (`rangers`, `species`, `sightings`), insert sample data, and perform essential SQL queries including:
+🔹 নামের ঝামেলা কমানো
+একই নামের টেবিল বা ডেটা আলাদা আলাদা স্কিমায় রাখতে পারবেন।
 
-- **CRUD operations**
-- **Constraints (PK, FK, CHECK, DEFAULT)**
-- **JOINs**
-- **Aggregations (`COUNT`, `MAX`, etc.)**
-- **Filtering (`WHERE`, `HAVING`)**
-- **Data manipulation (`UPDATE`, `DELETE`) etc**
+উদাহরণ: একই ডেটাবেসে sales.customers আর support.customers নামে দুই টেবিল থাকতে পারে।
 
-This assignment reinforces your understanding of relational databases while engaging with an environmental use case.
+🔹 কোনো ইউজার কী করতে পারবে সেটাই ঠিক করা
+স্কিমা দিয়ে নির্ধারণ করা যায় কারা কী তথ্য দেখতে বা পরিবর্তন করতে পারবে।
 
----
+উদাহরণ: কোনো ইউজারকে শুধু একটা স্কিমা ব্যবহার করার অনুমতি দেওয়া যায়।
 
-## **📂 Database Setup**
+🔹 ডেটা খুঁজে পাওয়া সহজ করা
+PostgreSQL স্কিমার মধ্যে ডেটা খুঁজে পেতে সাহায্য করে, তাই ডেটা ব্যবস্থাপনা সহজ হয়।
 
-1️⃣ **Install PostgreSQL** on your system if not already installed.
+🔹 ভিন্ন টিম আলাদা আলাদা কাজ করতে পারবে
+বিভিন্ন টিম বা প্রোগ্রাম আলাদা আলাদা স্কিমায় কাজ করতে পারে, একে অপরের ডেটায় গণ্ডগোল হয়নি।
 
-2️⃣ Open **pgAdmin** or your preferred PostgreSQL terminal.
+## 3.Explain the **Primary Key** and **Foreign Key** concepts in PostgreSQL.
 
-3️⃣ **Create a new database** named `"conservation_db"` or any appropriate name.
+প্রাইমারি কী (Primary Key)
+প্রাইমারি কী হলো একটি টেবিলের এমন কলাম বা কলামসমষ্টি যা প্রতিটি সারিকে অনন্যভাবে চিহ্নিত করে।
+এটি কখনো NULL হতে পারে না এবং প্রতিটি মান অবশ্যই ইউনিক হতে হবে।
+প্রতিটি টেবিলে ideally একটি প্রাইমারি কী থাকা উচিত যাতে প্রতিটি রেকর্ড আলাদা করে চিহ্নিত করা যায়।
 
-4️⃣ **Connect** to the newly created database.
+ফরেন কী (Foreign Key)
+ফরেন কী হলো এমন একটি কলাম বা কলামসমষ্টি যা এক টেবিল থেকে অন্য টেবিলের প্রাইমারি কীর সাথে সম্পর্ক স্থাপন করে।
+এটি দুটি টেবিলের ডেটার মধ্যে লিঙ্ক বা সম্পর্ক গড়ে তোলে এবং সেই সম্পর্ক বজায় রাখে।
+ফরেন কী নিশ্চিত করে যে যেই মানটি ফরেন কীতে আছে, তা রেফারেন্স করা টেবিলের প্রাইমারি কীর সাথে মিলে (অথবা যদি অনুমতি থাকে তবে NULL হতে পারে)।
 
-5️⃣ Write PostgreSQL queries to solve given problems.
+উদাহরণ:
+ধরুন দুটি টেবিল আছে:
 
-## **📂 Table Details**
+rangers (ranger_id PRIMARY KEY,name ,region);
+sightings (sighting_id PRIMARY KEY,ranger_id REFERENCES rangers (ranger_id),sighting_time TIMESTAMP);
+**ranger_id FOREIGN KEY যা rangers টেবিলের ranger_id কে রেফারেন্স করে**
 
----
+এখানে মানে হলো, প্রতিটি sighting অবশ্যই rangers টেবিলের একটি বৈধ সারির অন্তর্ভুক্ত।
 
-## 🧱 The 3 Main Tables `Meera` Uses:
-```markdown
-| Table Name  | What It Stores                                                                |
-| ----------- | ----------------------------------------------------------------------------- |
-| `rangers`   | Information about rangers like Meera (name, contact, zone)                    |
-| `species`   | Info about different animals (name, scientific name, how endangered they are) |
-| `sightings` | Records of when and where each animal was seen                                |
-```
+## 5. Explain the purpose of the WHERE clause in a SELECT statement.
+### SELECT স্টেটমেন্টে WHERE ক্লজের উদ্দেশ্য:
+WHERE ক্লজ ব্যবহৃত হয় টেবিল থেকে নির্দিষ্ট শর্ত পূরণ করা রেকর্ডগুলো নির্বাচন করতে।
 
-### 1️⃣ `rangers`
+এটি কেবল সেই সারিগুলোকে আনে যা শর্ত মেনে চলে, বাকি সারিগুলোকে বাদ দেয়।
 
-```markdown
-| Field Name  | Description               |
-| ----------- | ------------------------- |
-| `ranger_id` | Unique ID for each ranger |
-| `name`      | Full name of the ranger   |
-| `region`    | Area they patrol          |
-```
----
+এর ফলে বড় ডেটাসেট থেকে বিশেষ কিছু ডেটা আলাদা করে আনা যায়।
 
-### 2️⃣ `species`
+উদাহরণ: 
 
-```markdown
-| Field Name            | Description                            |
-| --------------------- | -------------------------------------- |
-| `species_id`          | Unique ID for each species             |
-| `common_name`         | Common name (e.g., "Shadow Leopard")   |
-| `scientific_name`     | Scientific name                        |
-| `discovery_date`      | When the species was first recorded    |
-| `conservation_status` | Status like "Endangered", "Vulnerable" |
-```
-> ✅ discovery_date helps track when a species was officially identified.
-> 
-
----
-
-### 3️⃣ `sightings`
-
-```markdown
-| Field Name      | Description                                |
-| --------------- | ------------------------------------------ |
-| `sighting_id`   | Unique ID for each sighting                |
-| `ranger_id`     | Who made the sighting (links to `rangers`) |
-| `species_id`    | Which animal was seen (links to `species`) |
-| `sighting_time` | Date and time of the sighting              |
-| `location`      | Where it was seen                          |
-| `notes`         | Additional observations (optional)         |
-```
-
-> ✅ sighting_time tracks when an animal was seen — very useful for monitoring wildlife activity.
-> 
-
----
-
-## 🔗 Relationships Between Tables
-
-```markdown
-| Relationship           | Description                                       |
-| ---------------------- | ------------------------------------------------- |
-| `sightings`→ `rangers` | Each sighting is linked to the ranger who made it |
-| `sightings`→ `species` | Each sighting is linked to a specific species     |
-```
----
-
-## **📂 Sample Data**
-
-### **1️⃣ `rangers` Table**
-
-```markdown
-| ranger_id | name             | region         |
-|-----------|------------------|--------------- |
-| 1         | Alice Green      | Northern Hills |
-| 2         | Bob White        | River Delta    |
-| 3         | Carol King       | Mountain Range |
 
 ```
-
-### **2️⃣ `species` Table**
-
-```markdown
-| species_id | common_name       | scientific_name         | discovery_date | conservation_status |
-|------------|-------------------|-------------------------|----------------|---------------------|
-| 1          | Snow Leopard      | Panthera uncia          | 1775-01-01     | Endangered          |
-| 2          | Bengal Tiger      | Panthera tigris tigris  | 1758-01-01     | Endangered          |
-| 3          | Red Panda         | Ailurus fulgens         | 1825-01-01     | Vulnerable          |
-| 4          | Asiatic Elephant  | Elephas maximus indicus | 1758-01-01     | Endangered          |
-
+SELECT * FROM sightings WHERE location LIKE '%Pass';
 ```
 
-### **3️⃣ `sightings` Table**
+এখানে WHERE location LIKE '%Pass শর্ত অনুযায়ী কেবল Pass আছে এরকম শব্দ যুক্ত location এর রেকর্ড গুলা দেখাবে 
 
-```markdown
-| sighting_id | species_id | ranger_id | location          | sighting_time        | notes                      |
-|-------------|------------|-----------|-------------------|----------------------|----------------------------|
-| 1           | 1          | 1         | Peak Ridge        | 2024-05-10 07:45:00  | Camera trap image captured |
-| 2           | 2          | 2         | Bankwood Area     | 2024-05-12 16:20:00  | Juvenile seen              |
-| 3           | 3          | 3         | Bamboo Grove East | 2024-05-15 09:10:00  | Feeding observed           |
-| 4           | 1          | 2         | Snowfall Pass     | 2024-05-18 18:30:00  | (NULL)                     |
+সংক্ষেপে:
+WHERE ক্লজ শর্তের ভিত্তিতে সারি ফিল্টার করে।
 
-```
+এটি নির্দিষ্ট ডেটা পাওয়ার জন্য ব্যবহৃত হয়।
 
----
+WHERE না দিলে SELECT স্টেটমেন্ট সব সারি দেখায়।
 
-## **📂 PostgreSQL Problems & Sample Outputs → 50 Marks**
+### 8. What is the significance of the `JOIN` operation, and how does it work in PostgreSQL? 
+### JOIN অপারেশনের গুরুত্ব কী, এবং এটি PostgreSQL-এ কীভাবে কাজ করে?
+JOIN অপারেশনের গুরুত্ব কী?
+JOIN দিয়ে আপনি দুই বা ততোধিক টেবিলের তথ্য একসাথে মেলাতে পারেন।
 
-1️⃣ **Register a new ranger with provided data with name = 'Derek Fox' and region = 'Coastal Plains'**
+এটি আপনাকে একাধিক টেবিল থেকে সম্পর্কিত ডেটা একত্রিত করে অর্থবহ তথ্য পেতে সাহায্য করে।
 
-**Sample Output:**
+কারণ রিলেশনাল ডেটাবেজে ডেটা সাধারণত বিভিন্ন টেবিলে ভাগ করা থাকে, তাই JOIN খুবই দরকারি।
 
-```markdown
-AffectedRows : 1
-(No output needed - this is an INSERT operation)
-```
+PostgreSQL-এ JOIN কীভাবে কাজ করে?
+আপনি দুটি বা বেশি টেবিল নির্দিষ্ট করে দেন এবং একটি শর্ত (অধিকাংশ সময় কী বা ID-এর ভিত্তিতে) দেন যেটা দিয়ে টেবিলগুলোকে সম্পর্কিত করা হয়।
 
-2️⃣ **Count unique species ever sighted.**
+PostgreSQL সেই শর্ত মেনে টেবিলের সারিগুলো একত্রিত করে।
 
-**Sample Output:**
+ফলাফল হিসেবে একটি নতুন টেবিল বা রেজাল্টসেট পাওয়া যায় যেখানে দুই টেবিলের তথ্য মিশে থাকে।
 
-```markdown
-| unique_species_count |
-| ---------------------|
-| 3                    |
-```
+PostgreSQL-এ প্রচলিত JOIN এর ধরন:
+**INNER JOIN** 
+দুই টেবিলেই মিলে এমন সারিগুলো দেয় 
+**LEFT JOIN** 
+বাম টেবিলের সব সারি + ডান টেবিল থেকে মিলে যেসব সারি, না মিলে সেগুলোতে NULL থাকে |
+**RIGHT JOIN**
+ডান টেবিলের সব সারি + বাম টেবিল থেকে মিলে যেসব সারি, না মিলে সেগুলোতে NULL থাকে |
+**FULL JOIN**  
+দুই টেবিলের সব সারি, মিলছে বা না মিলছে যেকোনো |
 
-3️⃣ **Find all sightings where the location includes "Pass".**
+### 9. Explain the `GROUP BY` clause and its role in aggregation operations.
+## GROUP BY ক্লজ এবং এটি অ্যাগ্রিগেশন অপারেশনে কীভাবে কাজ করে?
+GROUP BY ক্লজ কী?
 
-**Sample Output:**
+GROUP BY ক্লজ SQL-এ ব্যবহৃত হয় এমন সারিগুলোকে গ্রুপ করার জন্য যাদের নির্দিষ্ট কলামে একই মান থাকে, যাতে সেগুলোকে সারসংক্ষেপ (summary) আকারে দেখানো যায়।
 
-```markdown
-| sighting_id | species_id | ranger_id | location      | sighting_time       | notes  |
-| ------------|------------|-----------|---------------|---------------------|--------|
-| 4           | 1          | 2         | Snowfall Pass | 2024-05-18 18:30:00 | (NULL) |
-```
+এটি প্রধানত COUNT(), SUM(), AVG(), MAX(), MIN() এর মতো অ্যাগ্রিগেট (aggregation) ফাংশনের সঙ্গে ব্যবহার করা হয়, যা প্রতিটি গ্রুপের উপর গণনা করার জন্য।
 
-4️⃣ **List each ranger's name and their total number of sightings.**
+অ্যাগ্রিগেশন অপারেশনে ভূমিকা:
+যখন আপনি পুরো টেবিলের বদলে প্রতিটি ডেটার গ্রুপের জন্য মোট, গড়, সংখ্যা ইত্যাদি ফলাফল বের করতে চান, তখন GROUP BY ব্যবহার করেন।
 
-**Sample Output:**
-
-```markdown
-| name        | total_sightings |
-|-------------|-----------------|
-| Alice Green | 1               |
-| Bob White   | 2               |
-| Carol King  | 1               |
-
-```
-
-5️⃣ **List species that have never been sighted.**
-
-**Sample Output:**
-
-```markdown
-| common_name      |
-|------------------|
-| Asiatic Elephant |
-
-```
-
-6️⃣ **Show the most recent 2 sightings.**
-
-**Sample Output:**
-
-```markdown
-| common_name   | sighting_time        | name        |
-|---------------|----------------------|-------------|
-| Snow Leopard  | 2024-05-18 18:30:00  | Bob White   |
-| Red Panda     | 2024-05-15 09:10:00  | Carol King  |
-
-```
-
-7️⃣ **Update all species discovered before year 1800 to have status 'Historic'.**
-
-**Sample Output:**
-
-```markdown
-AffectedRows : 3
-(No output needed - this is an UPDATE operation)
-```
-
-8️⃣ **Label each sighting's time of day as 'Morning', 'Afternoon', or 'Evening'.**
-
-- Morning: before 12 PM
-- Afternoon: 12 PM–5 PM
-- Evening: after 5 PM
-
-**Sample Output:**
-
-```markdown
-| sighting_id | time_of_day |
-|-------------|-------------|
-| 1           | Morning     |
-| 2           | Afternoon   |
-| 3           | Morning     |
-| 4           | Evening     |
-
-```
-
-9️⃣ **Delete rangers who have never sighted any species**
-
-**Sample Output:**
-
-```markdown
-AffectedRows : 1
-(No output needed - this is a DELETE operation)
-```
+এটি সারিগুলোকে এক বা একাধিক কলামের ভিত্তিতে গ্রুপে ভাগ করে, তারপর অ্যাগ্রিগেট ফাংশনগুলো প্রতিটি গ্রুপের জন্য আলাদা ফলাফল হিসাব করে।
 
 
----
 
-## **📂 Submission Instructions**
-
-1️⃣ **Prepare a single SQL file** containing:
-- SQL code for table creation, sample data insertion, and all queries.
-- SQL queries for all problems, each preceded by a comment (`- Problem X`).
-  
-2️⃣ **Verify** that all queries run without errors.
-
-3️⃣ Save your file as "PostgreSQL_Assignment.sql" or another appropriate name.
-
-🔹 Submit only the **GitHub repository link** containing your solution file. GitHub repository should be public.
-
----
-
-
-## **📂 Bonus Section (Answer Any 5 Questions on readme.md in Bangla) → 10 Marks**
-
-
-1. What is PostgreSQL?
-2. What is the purpose of a database schema in PostgreSQL?
-3. Explain the **Primary Key** and **Foreign Key** concepts in PostgreSQL.
-4. What is the difference between the `VARCHAR` and `CHAR` data types?
-5. Explain the purpose of the `WHERE` clause in a `SELECT` statement.
-6. What are the `LIMIT` and `OFFSET` clauses used for?
-7. How can you modify data using `UPDATE` statements?
-8. What is the significance of the `JOIN` operation, and how does it work in PostgreSQL?
-9. Explain the `GROUP BY` clause and its role in aggregation operations.
-10. How can you calculate aggregate functions like `COUNT()`, `SUM()`, and `AVG()` in PostgreSQL?
-
-💡 Pro Tip: Don't be short and concise in your answers; explain the idea behind each question and provide in-depth analysis with relevant examples.
----
-
-## **⏳ Deadline & Marks Distribution**
-
-| Date | Marks | Deadline Time |
-| --- | --- | --- |
-| **26 May, 2025** | **60 Marks** | Until **11:59 PM** |
-| **27 May, 2025** | **50 Marks** | Until **11:59 PM** |
-| **After 27 May, 2025** | **30 Marks** | Until **11:59 PM** |
-
----
-
-## **🚀 Important Notice**
-
-Participation in this assignment is **mandatory** for all students. It builds foundational skills in PostgreSQL, which will be critical for future topics like **Prisma ORM** and **full-stack development**.
-
-Approach this task with dedication, precision, and a commitment to excellence.
-
-Plagiarism will not be tolerated. Please make sure that the code you submit is your own. Any instance of plagiarism will result in a score of 0. Additionally, if any AI-generated content or ChatGPT-generated responses are detected, the score will also be 0.
-
-**Best of luck!** 💡🔥🌿
