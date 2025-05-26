@@ -99,7 +99,7 @@ PostgreSQL সেই শর্ত মেনে টেবিলের সার�
 SELECT common_name, sighting_time, ranger_id
     FROM species sp JOIN sightings st 
     ON sp.species_id = st.species_id;
-            ```
+```
 
 PostgreSQL-এ প্রচলিত JOIN এর ধরন:
 **INNER JOIN** 
